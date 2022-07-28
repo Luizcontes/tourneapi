@@ -9,6 +9,8 @@ exports.getBandas = async (req, res, next) => {
 exports.getBandaById = async (req, res, next) => {
     try {
         const banda = await new BandasService().getBandaById(req.params.id)
+        if(banda === undefined)
+            throw new Error('Record not found')
         res.status(StatusCodes.OK).send(banda)
     } catch (error) {
         res.status(StatusCodes.BAD_REQUEST).send({ message: error.message })
@@ -27,7 +29,9 @@ exports.postBanda = async (req, res, next) => {
 exports.putBanda = async (req, res, next) => {
     try {
         const banda = await new BandasService()
-            .putBanda(req.body, parseInt(req.params.id))
+        .putBanda(req.body, parseInt(req.params.id))
+        if(banda === undefined)
+            throw new Error('Record not found')
         res.status(StatusCodes.OK).send(banda)
     } catch (error) {
         res.status(StatusCodes.BAD_REQUEST).send({ message: error.message })

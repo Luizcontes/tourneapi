@@ -15,7 +15,7 @@ class BandasRepositorio {
         const query = 'SELECT * FROM bandas WHERE id_banda = ?;'
         const [banda] = await connection.query(query, [id])
         
-        return banda
+        return banda[0]
     }
 
     async create({ nome, genero }) {

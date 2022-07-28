@@ -1,0 +1,164 @@
+openapi: "3.0.0"
+info:
+  title: "Bands Tour API"
+  description: "Service to track where your favorite groups are going to play"
+  version: 1.0.0
+  contact: 
+    name: "the developer"
+    email: luiz.contes@hotmail.com
+  license:
+    name: Contes Software Development
+    url: https://luizcontes.github.io/
+servers:
+  - url: https://tourneapi.herokuapp.com
+  - url: http://localhost:8081
+
+tags:
+  - name: Bandas
+    description: The Bands tours API
+  - name: Locais
+    description: Places to held events (under construction)
+  - name: Events
+    description: Events in which a specific band is playing in a 
+      specific place (under construction)
+
+paths:
+  /bandas:
+    get:
+      tags:
+        - Bandas
+      summary: Gets a full list of bandas
+      description: |
+        A valid request will show a complete list of all bands contained in the API database
+      content:
+        application/json:
+          schema:
+            "#/components/schemas/Bandas"
+      responses:
+        '200':
+          description: Returns a full list of bands
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Bandas"
+    post:
+      tags:
+          - Bandas
+      summary: Creates a band in the database
+      description: Creates a new band record
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Bandas"
+            examples:
+              Banda:
+                value:
+                  nome: metallica
+                  genero: heavy metal
+      responses:
+        '201':
+          description: Returns the record if the request succeed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Bandas"
+        '400':
+          description: Error Bad Request
+  /bandas/{id}:
+    get:
+      tags:
+        - Bandas
+      summary: Gets a banda by it`s id
+      description: Passing the bands id whitin the query request returs the bands record
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Numeric ID required
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Returns the record if the request succeed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Bandas"
+        '400':
+          description: Error Bad Request      
+    put:
+      tags:
+        - Bandas
+      summary: Updates a band by it`s id
+      description: Updates a bands record by ID as a parameter in the query
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Numeric ID required
+          schema:
+            type: integer
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Banda"
+            examples:
+              Banda:
+                value:
+                  nome: metallica
+                  genero: heavy metal
+      responses:
+        '200':
+          description: Returns the record if the request succeed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Bandas"
+        '400':
+          description: Error Bad Request
+        '404':
+          description: Record not found.
+
+components:
+  schemas:
+    Bandas:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Auto incremented by de DB
+        nome:
+          type: string
+          description: The band`s name
+        genero: 
+          type: string
+          description: The band`s genre
+      example:
+        id: 1
+        nome: metallica
+        genero: metal
+    
+    Banda:
+      type: object
+      properties:
+        nome:
+          type: string
+          description: The band`s name
+        genero: 
+          type: string
+          description: The band`s genre
+      example:
+        nome: metallica
+        genero: metal
