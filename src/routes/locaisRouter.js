@@ -1,11 +1,15 @@
 const express = require('express')
 const router = express.Router()
-const bandasController = require('../controllers/bandasController')
+const locaisController = require('../controllers/locaisController')
 
+/* 
+ *  Route used to get every request posted to '/locais'
+ *  in the app.js and execute a method from locaisService
+*/
 
-router.get('/', bandasController.getBandas)
-router.get('/:id', bandasController.getBandaById)
-router.post('/', bandasController.postBanda)
-router.put('/:id', bandasController.putBanda)
+router.get('/', locaisController.getLocais)
+router.get('/:id', locaisController.getLocalById)
+router.post('/', locaisController.postLocal)
+router.put('/:id', locaisController.putLocal)
 
 module.exports = router

@@ -57,11 +57,6 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/Bandas"
-            examples:
-              Banda:
-                value:
-                  nome: metallica
-                  genero: heavy metal
       responses:
         '201':
           description: Returns the record if the request succeed
@@ -130,6 +125,103 @@ paths:
           description: Error Bad Request
         '404':
           description: Record not found.
+  /locais:
+    get:
+      tags:
+        - Locais
+      summary: Gets a full list of places
+      description: |
+        A valid request will show a complete list of all places contained in the API database
+      content:
+        application/json:
+          schema:
+            "#/components/schemas/Locais"
+      responses:
+        '200':
+          description: Returns a full list of places
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Locais"
+    post:
+      tags:
+          - Locais
+      summary: Creates a local in the database
+      description: Creates a new local record
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Locais"
+      responses:
+        '201':
+          description: Returns the record if the request succeed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Locais"
+        '400':
+          description: Error Bad Request
+  /locais/{id}:
+    get:
+      tags:
+        - Locais
+      summary: Gets a local by it`s id
+      description: Passing the local`s` id whitin the query request returns the local`s` record
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Numeric ID required
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Returns the record if the request succeed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Locais"
+        '400':
+          description: Error Bad Request      
+    put:
+      tags:
+        - Locais
+      summary: Updates a local by it`s id
+      description: Updates a local record by passing the ID as a parameter in the query
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Numeric ID required
+          schema:
+            type: integer
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Local"
+      responses:
+        '200':
+          description: Returns the record if the request succeed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Locais"
+        '400':
+          description: Error Bad Request
+        '404':
+          description: Record not found.
 
 components:
   schemas:
@@ -149,7 +241,6 @@ components:
         id: 1
         nome: metallica
         genero: metal
-    
     Banda:
       type: object
       properties:
@@ -162,3 +253,31 @@ components:
       example:
         nome: metallica
         genero: metal
+    Locais:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Auto incremented by de DB
+        nome:
+          type: string
+          description: The locals`s name
+        genero: 
+          type: string
+          description: The locals`s address
+      example:
+        id: 1
+        nome: portimao expo center
+        morada: rua da macieira, 25
+    Local:
+      type: object
+      properties:
+        nome:
+          type: string
+          description: The local`s name
+        genero: 
+          type: string
+          description: The local`s address
+      example:
+        nome: tavira
+        morada: rua direita, 5

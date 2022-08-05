@@ -1,6 +1,12 @@
 const BandasService = require('../services/bandasService')
 const { StatusCodes } = require("http-status-codes")
 
+/* 
+ *  Controller created to execute a CRUD for bands
+ *  records getting requests from the routes
+ *  and executing an action through the service module
+*/
+
 exports.getBandas = async (req, res, next) => {
     const bandas = await new BandasService().getBandas()
     res.status(StatusCodes.OK).send(bandas)

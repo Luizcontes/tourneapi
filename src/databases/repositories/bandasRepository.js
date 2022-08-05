@@ -1,4 +1,9 @@
-const db = require('../bandas')
+const db = require('../appDB')
+
+/* 
+ *  This repository is the main connection between the requests
+ *  and every query executed in the DataBase
+*/
 
 class BandasRepositorio {
     
