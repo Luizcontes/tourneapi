@@ -18,7 +18,7 @@ tags:
     description: The Bands tours API
   - name: Locais
     description: Places to held events (under construction)
-  - name: Events
+  - name: Eventos
     description: Events in which a specific band is playing in a 
       specific place (under construction)
 
@@ -158,7 +158,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Locais"
+              $ref: "#/components/schemas/Local"
       responses:
         '201':
           description: Returns the record if the request succeed
@@ -222,6 +222,103 @@ paths:
           description: Error Bad Request
         '404':
           description: Record not found.
+  /eventos:
+    get:
+      tags:
+        - Eventos
+      summary: Gets a full list of events
+      description: |
+        A valid request will show a complete list of all events contained in the API database
+      content:
+        application/json:
+          schema:
+            "#/components/schemas/Evento"
+      responses:
+        '200':
+          description: Returns a full list of events
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Eventos"
+    post:
+      tags:
+          - Eventos
+      summary: Creates a event in the database
+      description: Creates a new event record
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Evento"
+      responses:
+        '201':
+          description: Returns the record if the request succeed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Eventos"
+        '400':
+          description: Error Bad Request
+  /eventos/{id}:
+    get:
+      tags:
+        - Eventos
+      summary: Gets a event by it`s id
+      description: Passing the event`s` id whitin the query request returns the local`s` record
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Numeric ID required
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Returns the record if the request succeed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Eventos"
+        '400':
+          description: Error Bad Request      
+    put:
+      tags:
+        - Eventos
+      summary: Updates a event by it`s id
+      description: Updates a event record by passing the ID as a parameter in the query
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Numeric ID required
+          schema:
+            type: integer
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Evento"
+      responses:
+        '200':
+          description: Returns the record if the request succeed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Eventos"
+        '400':
+          description: Error Bad Request
+        '404':
+          description: Record not found.
 
 components:
   schemas:
@@ -281,3 +378,37 @@ components:
       example:
         nome: tavira
         morada: rua direita, 5
+    Eventos:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Auto incremented by de DB
+        nome:
+          type: string
+          description: The event`s name
+        genero: 
+          type: string
+          description: The event`s date
+      example:
+        id_evento: 3
+        nome: boom
+        data: 2025-07-24
+        banda: silverchair
+        genero: grunge
+        local: silves praca central
+        morada: rua do centro s/n
+    Evento:
+      type: object
+      properties:
+        nome:
+          type: string
+          description: The event`s name
+        data: 
+          type: string
+          description: The data`s when the event is happening
+      example:
+        nome: rock in faro
+        data: 2022-07-19
+        id_banda: 2
+        id_local: 4

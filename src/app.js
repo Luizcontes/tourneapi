@@ -18,6 +18,10 @@ app.use('/bandas', bandasRoute)
 const locaisRouter = require('./routes/locaisRouter')
 app.use('/locais', locaisRouter)
 
+// Route to manipulate data from a specific event
+const eventosRouter = require('./routes/eventosRouter')
+app.use('/eventos', eventosRouter)
+
 // Not found Server response
 app.use((req, res) => res.status(StatusCodes.NOT_FOUND)
 .send('<h1>404 Sorry! Page not Found!</h1>'))

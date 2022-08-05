@@ -1,11 +1,11 @@
 const express = require('express')
 const router = express.Router()
-const bandasController = require('../controllers/bandasController')
+const eventosController = require('../controllers/eventosController')
 
 
-router.get('/', bandasController.getBandas)
-router.get('/:id', bandasController.getBandaById)
-router.post('/', bandasController.postBanda)
-router.put('/:id', bandasController.putBanda)
+router.get('/', eventosController.getEventos)
+router.get('/:id', eventosController.getEventoById)
+router.post('/', eventosController.postEvento)
+router.put('/:id', eventosController.putEvento)
 
 module.exports = router

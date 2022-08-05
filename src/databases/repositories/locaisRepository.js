@@ -1,7 +1,7 @@
 const db = require('../appDB')
 
 /* 
- *  This repository is the mais connection between the requests
+ *  This repository is the main connection between the requests
  *  and every query executed in the DataBase
 */
 
@@ -34,7 +34,7 @@ class LocaisRepository {
     async postLocal({ nome, morada }) {
         try {
             const connection = await db.connectMysql()
-            const query = 'INSERT INTO locais (nome, morada) VALUES (?, ?);'
+            const query = 'INSERT INTO locais (local, morada) VALUES (?, ?);'
             const [data] = await connection.query(query, [nome, morada])
             if (data.serverStatus === 2) {
                 let record = await this.getLocalByID(data.insertId)
@@ -48,7 +48,7 @@ class LocaisRepository {
     async putLocal(id, { nome, morada }) {
         try {
             const connection = await db.connectMysql()
-            const query = 'UPDATE locais SET nome=?, morada=? WHERE id_local=?;'
+            const query = 'UPDATE locais SET local=?, morada=? WHERE id_local=?;'
             const [data] = await connection.query(query, [nome, morada, id])
             if (data.serverStatus === 2) {
                 let record = await this.getLocalByID(id)

@@ -25,7 +25,7 @@ class BandasRepositorio {
 
     async create({ nome, genero }) {
         const connection = await db.connectMysql()
-        const query = 'INSERT INTO bandas (nome, genero) VALUE (?, ?);'
+        const query = 'INSERT INTO bandas (banda, genero) VALUE (?, ?);'
         const [banda] = await connection.query(query, [nome, genero])
         
         return this.findById(banda.insertId)
@@ -33,7 +33,7 @@ class BandasRepositorio {
 
     async update({ nome, genero }, id) {
         const connection = await db.connectMysql()
-        const query = 'UPDATE bandas SET nome = ?, genero = ? WHERE id_banda = ?;'
+        const query = 'UPDATE bandas SET banda = ?, genero = ? WHERE id_banda = ?;'
         await connection.query(query, [nome, genero, id])
         
         return this.findById(id)
